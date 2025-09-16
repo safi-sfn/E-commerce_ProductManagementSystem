@@ -19,12 +19,12 @@ import jakarta.persistence.Table;
 public class Product {
 
 	@Id
-	@Column(name="profuct_id")
+	@Column(name="product_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "product_sequence")
 	@SequenceGenerator(name = "product_sequence",sequenceName = "product_sequence",allocationSize = 1,initialValue = 1000)
 	private Integer productId;
 	
-	@Column(name="profuct_name", nullable=false)
+	@Column(name="product_name", nullable=false)
 	private String productName;
 	
 	@Column(name="product_price",nullable = false)
@@ -35,10 +35,13 @@ public class Product {
 
 	@Column(name="product_rating",precision = 10,scale = 2)
 	private BigDecimal productRating;
-	
+/*	
 	@Column(name="product_image")
 	@Lob
-	private byte[] productImage;		
+	private byte[] productImageUrl;		
+*/
+	@Column(name="product_image")
+	private String productImageUrl;		
 	
 	@ManyToOne
 	@JoinColumn(name="product_category_id")
@@ -88,12 +91,12 @@ public class Product {
 		this.productRating = productRating;
 	}
 
-	public byte[] getProductImage() {
-		return productImage;
+	public String getProductImageUrl() {
+		return productImageUrl;
 	}
 
-	public void setProductImage(byte[] productImage) {
-		this.productImage = productImage;
+	public void setProductImageUrl(String productImageUrl) {
+		this.productImageUrl = productImageUrl;
 	}
 
 	public ProductCategory getProductCategory() {
@@ -113,13 +116,13 @@ public class Product {
 	}
 
 	public Product(String productName, Integer productPrice, BigInteger quantityAvailable, BigDecimal productRating,
-			byte[] productImage, ProductCategory productCategory, ProductBrand productBrand) {
+			String productImageUrl, ProductCategory productCategory, ProductBrand productBrand) {
 		super();
 		this.productName = productName;
 		this.productPrice = productPrice;
 		this.quantityAvailable = quantityAvailable;
 		this.productRating = productRating;
-		this.productImage = productImage;
+		this.productImageUrl = productImageUrl;
 		this.productCategory = productCategory;
 		this.productBrand = productBrand;
 	}
