@@ -17,7 +17,7 @@ public class ProductDto {
 	
 	private BigDecimal productRating;
 
-	private byte[] productImage;
+	private String productImageUrl;
 	
 	private ProductCategoryDto productCategory;
 
@@ -63,12 +63,12 @@ public class ProductDto {
 		this.productRating = productRating;
 	}
 
-	public byte[] getProductImage() {
-		return productImage;
+	public String getProductImageUrl() {
+		return productImageUrl;
 	}
 
-	public void setProductImage(byte[] productImage) {
-		this.productImage = productImage;
+	public void setProductImageUrl(String productImageUrl) {
+		this.productImageUrl = productImageUrl;
 	}
 
 	public ProductCategoryDto getProductCategory() {
@@ -88,13 +88,13 @@ public class ProductDto {
 	}
 
 	public ProductDto(String productName, Integer productPrice, BigInteger quantityAvailable, BigDecimal productRating,
-			byte[] productImage, ProductCategoryDto productCategory, ProductBrandDto productBrand) {
+			String productImageUrl, ProductCategoryDto productCategory, ProductBrandDto productBrand) {
 		super();
 		this.productName = productName;
 		this.productPrice = productPrice;
 		this.quantityAvailable = quantityAvailable;
 		this.productRating = productRating;
-		this.productImage = productImage;
+		this.productImageUrl = productImageUrl;
 		this.productCategory = productCategory;
 		this.productBrand = productBrand;
 	}
