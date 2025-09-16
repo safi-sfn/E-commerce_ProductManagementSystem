@@ -1,6 +1,7 @@
 package in.inxod.pms.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -53,19 +54,23 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Page<ProductDto> getAllProduct(Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+		Page<ProductDto> products =  productRepo.findAll(pageable).map(product -> ProductUtility.convertProductToProductDto(product));
+		return products;
 	}
 
 	@Override
 	public ProductDto getProductById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<Product> productExist = productRepo.findById(id);
+		ProductDto prodResDto = null;
+		if(productExist.isPresent()) {
+			prodResDto = ProductUtility.convertProductToProductDto(productExist.get());
+		}
+		return prodResDto;
 	}
 
 	@Override
 	public ProductDto updateProduct(Integer id, ProductDto productDto) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
