@@ -82,6 +82,19 @@ public class ProductController {
 	}
 	
 	
+	@GetMapping("/getBy-brandName/{brandName}")
+	public ResponseEntity<Page<ProductDto>> searchProductsByBrand(
+			@PathVariable("brandName") String brandName,
+			@PageableDefault(size = 10 , page = 0)Pageable pageable)  {
+		Page<ProductDto> responsePageDto = service.searchProductsByBrand(brandName,pageable);
+		if(responsePageDto == null || responsePageDto.getTotalElements() <= 0){
+			return new ResponseEntity<>(Page.empty(), HttpStatus.NO_CONTENT);
+		}else{
+			return new ResponseEntity<>(responsePageDto, HttpStatus.OK);
+		}
+	}
+
+	
 	
 	
 }
