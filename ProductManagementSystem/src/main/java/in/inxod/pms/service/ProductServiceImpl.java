@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import in.inxod.pms.dto.ProductDto;
+import in.inxod.pms.globalException.ProductNotFoundException;
 import in.inxod.pms.model.Product;
 import in.inxod.pms.model.ProductBrand;
 import in.inxod.pms.model.ProductCategory;
@@ -44,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
 			newCategory.setCategoryName(productDto.getProductCategory().getCategoryName());
 			newCategory.setOccassion(productDto.getProductCategory().getOccassion());
 		    newCategory.setConsumerType(productDto.getProductCategory().getConsumerType());
-			categoryRepo.save(newCategory);
+			newCategory = categoryRepo.save(newCategory);
 		}
 		
 		Product product = ProductUtility.constructProductModel(productDto, newBrand, newCategory);
@@ -70,8 +71,43 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public ProductDto updateProduct(Integer id, ProductDto productDto) {
+		Optional<Product> optional = productRepo.findById(id);
+		if(optional.isEmpty()) {
+			throw new ProductNotFoundException("Product Not Found with this id : "+id);
+		}
+		Product existingProduct = optional.get();
 		
-		return null;
+		// Get or Create Brand
+		ProductBrand newBrand = brandRepo.findByBrandNameIgnoreCase(productDto.getProductBrand().getBrandName());
+		if(newBrand == null) {
+			 newBrand = new ProductBrand();
+			newBrand.setBrandName(productDto.getProductBrand().getBrandName());
+			newBrand = brandRepo.save(newBrand);
+		}
+		
+		// Get or Create Category
+		ProductCategory newCategory = categoryRepo.findByCategoryNameIgnoreCase(productDto.getProductCategory().getCategoryName());
+		if(newCategory ==null) {
+			newCategory = new ProductCategory();
+			newCategory.setCategoryName(productDto.getProductCategory().getCategoryName());
+			newCategory.setOccassion(productDto.getProductCategory().getOccassion());
+		    newCategory.setConsumerType(productDto.getProductCategory().getConsumerType());
+			newCategory = categoryRepo.save(newCategory);
+		}
+		
+		// Update fields on the existing product
+				existingProduct.setProductName(productDto.getProductName());
+				existingProduct.setProductPrice(productDto.getProductPrice());
+				existingProduct.setQuantityAvailable(productDto.getQuantityAvailable());
+				existingProduct.setProductRating(productDto.getProductRating());
+		if(productDto.getProductImageUrl() != null) {
+			existingProduct.setProductImageUrl(productDto.getProductImageUrl());
+		}
+		
+		existingProduct.setProductBrand(newBrand);
+		existingProduct.setProductCategory(newCategory);
+		Product savedProduct = productRepo.save(existingProduct);
+		return ProductUtility.convertProductToProductDto(savedProduct);
 	}
 
 	@Override
