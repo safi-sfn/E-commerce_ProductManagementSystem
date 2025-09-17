@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import in.inxod.pms.dto.ProductDto;
+import in.inxod.pms.globalException.BrandNameNotValidException;
 import in.inxod.pms.globalException.ProductNotFoundException;
 import in.inxod.pms.model.Product;
 import in.inxod.pms.model.ProductBrand;
@@ -112,8 +113,17 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Page<ProductDto> searchProductsByBrand(String brandName, Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		if(brandName.equals(null) || brandName == null || brandName.isEmpty()) {
+			throw new BrandNameNotValidException("Brand Cannot be  Empty");
+		}
+		
+		Page<Product> products= brandRepo.findByBrandNameContainingIgnoreCase(brandName, pageable);
+		if (products != null && !products.getContent().isEmpty()) {
+			Page<ProductDto> responseProducts = products.map(product -> ProductUtility.convertProductToProductDto(product));
+			return responseProducts;
+		}
+		throw new BrandNameNotValidException("Brand does not exist or Not Valid Brand");
 	}
 
 	@Override
