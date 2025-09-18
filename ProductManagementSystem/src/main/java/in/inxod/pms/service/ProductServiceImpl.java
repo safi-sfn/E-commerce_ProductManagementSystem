@@ -141,8 +141,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Page<ProductDto> searchByTheProductPriceRange(double min, double max, Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+		Page<Product> products = productRepo.searchByPriceRange(min, max, pageable);
+		return products.map(product->ProductUtility.convertProductToProductDto(product));
+		
 	}
 
 }
