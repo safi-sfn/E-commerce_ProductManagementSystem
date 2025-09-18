@@ -33,10 +33,10 @@ import in.inxod.pms.globalException.ProductNotFoundException;
 import in.inxod.pms.service.ProductServiceImpl;
 
 @RestController
-@RequestMapping("/api")
+//@RequestMapping("/api")
 public class ProductController {
 
-	private static final String UPLOAD_DIR = "uploadsImage/";
+	private static final String UPLOAD_DIR = "uploads/";
 	
 	@Autowired
 	private ProductServiceImpl service;
@@ -45,6 +45,10 @@ public class ProductController {
 	public ResponseEntity<ProductDto> addProduct(
 					@RequestParam("product") String product,
 					@RequestParam("image") MultipartFile imageFile) throws  IOException {
+
+		
+		System.out.println("Received product JSON-------: " + product);
+	    System.out.println("Received image file---------: " + imageFile.getOriginalFilename());
 		// ObjectMApper Convert JSON to Java Object
 		ObjectMapper mapper = new ObjectMapper();
 		ProductDto productDto = mapper.readValue(product, ProductDto.class);
@@ -56,16 +60,25 @@ public class ProductController {
         Files.write(imagePath, imageFile.getBytes());
 
         // DTO me sirf image URL set karna
-        String imageUrl = "http://localhost:2426/inxod/pms/api/" + UPLOAD_DIR + fileName;
+        String imageUrl = "http://localhost:2426/inxod/pms/uploads/"+ fileName;
         productDto.setProductImageUrl(imageUrl);
         
 		ProductDto dto = service.addProduct(productDto);
 		return new ResponseEntity<>(dto, HttpStatus.CREATED);
+
+/*		
+		ObjectMapper mapper = new ObjectMapper();
+		ProductDto productDto = mapper.readValue(product, ProductDto.class);
+		productDto.setProductImage(imageFile.getBytes());
+
+		ProductDto dto = service.addProduct(productDto);
+		return new ResponseEntity<>(dto, HttpStatus.CREATED);
+*/
 	}
 	
 	
 	@GetMapping("/products")
-	public ResponseEntity<Page<ProductDto>> getAllProducts(@PageableDefault(size=10, page=0) Pageable pageble){
+	public ResponseEntity<Page<ProductDto>> getAllProducts(@PageableDefault(size=25, page=0) Pageable pageble){
 		Page<ProductDto> allProduct = service.getAllProduct(pageble);
 		return new ResponseEntity<>(allProduct,HttpStatus.OK);
 	}
@@ -106,7 +119,7 @@ public class ProductController {
 	@GetMapping("/products/{min}/{max}")
 	public ResponseEntity<Page<ProductDto>> serchByPriceRange(@PathVariable("min") double min, 
 					@PathVariable("max") double max,
-					@PageableDefault(page = 0, size = 5, sort = "productName", direction = Sort.Direction.ASC ) Pageable pageble ){
+					@PageableDefault(page = 0, size = 15, sort = "productName", direction = Sort.Direction.ASC ) Pageable pageble ){
 		Page<ProductDto> product = service.searchByTheProductPriceRange(min, max, pageble);
 		return new ResponseEntity<>(product,HttpStatus.OK);
 	}
