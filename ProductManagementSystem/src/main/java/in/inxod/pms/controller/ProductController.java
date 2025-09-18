@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,6 +95,12 @@ public class ProductController {
 		}
 	}
 
+	@GetMapping("/products/{productName}")
+	public ResponseEntity<List<ProductDto>> searchByProductName(@PathVariable("productName") String productName){
+		List<ProductDto> products = service.searchByProductName(productName);
+		
+		return new ResponseEntity<>(products,HttpStatus.OK);
+	}
 	
 	
 	
