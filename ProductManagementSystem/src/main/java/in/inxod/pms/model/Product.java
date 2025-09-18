@@ -35,11 +35,11 @@ public class Product {
 
 	@Column(name="product_rating",precision = 10,scale = 2)
 	private BigDecimal productRating;
-/*	
-	@Column(name="product_image")
-	@Lob
-	private byte[] productImageUrl;		
-*/
+	
+//	@Column(name="product_image")
+//	@Lob
+//	private byte[] productImage;		
+
 	@Column(name="product_image")
 	private String productImageUrl;		
 	
@@ -98,7 +98,16 @@ public class Product {
 	public void setProductImageUrl(String productImageUrl) {
 		this.productImageUrl = productImageUrl;
 	}
-
+	
+//
+//	public byte[] getProductImage() {
+//		return productImage;
+//	}
+//
+//	public void setProductImage(byte[] productImage) {
+//		this.productImage = productImage;
+//	}
+	
 	public ProductCategory getProductCategory() {
 		return productCategory;
 	}
