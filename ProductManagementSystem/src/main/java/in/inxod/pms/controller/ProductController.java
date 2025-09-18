@@ -7,9 +7,12 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
+import javax.swing.SortOrder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -100,6 +103,13 @@ public class ProductController {
 		return new ResponseEntity<>(products, HttpStatus.OK);
 	}
 	
+	@GetMapping("/products/{min}/{max}")
+	public ResponseEntity<Page<ProductDto>> serchByPriceRange(@PathVariable("min") double min, 
+					@PathVariable("max") double max,
+					@PageableDefault(page = 0, size = 5, sort = "productName", direction = Sort.Direction.ASC ) Pageable pageble ){
+		Page<ProductDto> product = service.searchByTheProductPriceRange(min, max, pageble);
+		return new ResponseEntity<>(product,HttpStatus.OK);
+	}
 	
 }
 
