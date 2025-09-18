@@ -12,9 +12,18 @@ target/
 .settings
 .springBeans
 .sts4-cache
-.mvn
 .gitattributes
-.uploads
+
+# Maven wrapper files
+.mvn/
+.mvn/wrapper/maven-wrapper.jar
+
+# Ignore the entire uploads folder
+/uploads/*
+# But keep the .gitkeep file
+!/uploads/.gitkeep
+
+
 
 ### IntelliJ IDEA ###
 .idea
