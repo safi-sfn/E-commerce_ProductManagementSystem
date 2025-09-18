@@ -19,7 +19,7 @@ public interface ProductService {
 	
 	Page<ProductDto> searchProductsByBrand(String brandName,Pageable pageable);
 	
-	List<ProductDto> searchByTheName(String productName);
+	List<ProductDto> searchByProductName(String productName);
 	
 	Page<ProductDto> searchByTheProductPriceRange(double min,double max , Pageable pageable);
 }
