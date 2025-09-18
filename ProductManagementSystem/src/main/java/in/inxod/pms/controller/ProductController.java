@@ -82,26 +82,23 @@ public class ProductController {
 		return new ResponseEntity<>(updateProduct,HttpStatus.OK);
 	}
 	
-	
 	@GetMapping("/getBy-brandName/{brandName}")
-	public ResponseEntity<Page<ProductDto>> searchProductsByBrand(
-			@PathVariable("brandName") String brandName,
-			@PageableDefault(size = 10 , page = 0)Pageable pageable)  {
-		Page<ProductDto> responsePageDto = service.searchProductsByBrand(brandName,pageable);
-		if(responsePageDto == null || responsePageDto.getTotalElements() <= 0){
+	public ResponseEntity<Page<ProductDto>> searchProductsByBrand(@PathVariable("brandName") String brandName,
+			@PageableDefault(size = 10, page = 0) Pageable pageable) {
+		Page<ProductDto> responsePageDto = service.searchProductsByBrand(brandName, pageable);
+		if (responsePageDto == null || responsePageDto.getTotalElements() <= 0) {
 			return new ResponseEntity<>(Page.empty(), HttpStatus.NO_CONTENT);
-		}else{
+		} else {
 			return new ResponseEntity<>(responsePageDto, HttpStatus.OK);
 		}
 	}
 
 	@GetMapping("/products/{productName}")
-	public ResponseEntity<List<ProductDto>> searchByProductName(@PathVariable("productName") String productName){
+	public ResponseEntity<List<ProductDto>> searchByProductName(@PathVariable("productName") String productName) {
 		List<ProductDto> products = service.searchByProductName(productName);
-		
-		return new ResponseEntity<>(products,HttpStatus.OK);
+
+		return new ResponseEntity<>(products, HttpStatus.OK);
 	}
-	
 	
 	
 }
