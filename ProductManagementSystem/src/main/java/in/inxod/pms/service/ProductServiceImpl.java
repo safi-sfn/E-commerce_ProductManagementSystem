@@ -1,5 +1,6 @@
 package in.inxod.pms.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -127,9 +128,15 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductDto> searchByTheName(String productName) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ProductDto> searchByProductName(String productName) {
+		List<Product> productList = productRepo.searchByName(productName);
+		
+		List<ProductDto> productDtoList = new ArrayList<>();
+		for(Product product : productList) {
+			ProductDto dto = ProductUtility.convertProductToProductDto(product);
+			productDtoList.add(dto);
+		}
+		return productDtoList;
 	}
 
 	@Override
