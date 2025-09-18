@@ -19,6 +19,8 @@ public class ProductDto {
 
 	private String productImageUrl;
 	
+//	private byte[] productImage;
+	
 	private ProductCategoryDto productCategory;
 
 	private ProductBrandDto productBrand;
@@ -70,7 +72,17 @@ public class ProductDto {
 	public void setProductImageUrl(String productImageUrl) {
 		this.productImageUrl = productImageUrl;
 	}
-
+	
+//	
+//
+//	public byte[] getProductImage() {
+//		return productImage;
+//	}
+//
+//	public void setProductImage(byte[] productImage) {
+//		this.productImage = productImage;
+//	}
+	
 	public ProductCategoryDto getProductCategory() {
 		return productCategory;
 	}
