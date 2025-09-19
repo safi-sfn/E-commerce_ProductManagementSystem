@@ -8,5 +8,7 @@ import in.inxod.pms.model.ProductCategory;
 @Repository
 public interface ProductCategoryRepository extends JpaRepository<ProductCategory, Integer> {
 	
-	ProductCategory findByCategoryNameIgnoreCase(String productCategory);
+	// This method finds a ProductCategory by its name, ignoring case differences
+	// Example: It will match "Electronics", "electronics", or "ELECTRONICS" as the same
+		public ProductCategory findByCategoryNameIgnoreCase(String productCategory);
 }
