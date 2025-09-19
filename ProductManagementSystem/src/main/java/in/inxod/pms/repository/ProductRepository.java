@@ -19,7 +19,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	  @Query("SELECT p FROM Product p WHERE LOWER(p.productName) LIKE LOWER(CONCAT('%', :keyword, '%'))")
 	    List<Product> searchByName(@Param("keyword") String keyword);
 
-	   // This method searches for products within a specific price range
+	// This method searches for products within a specific price range
 	    @Query("select  p from Product p where p.productPrice between :min and :max")
 	    Page<Product> searchByPriceRange(@Param("min") double min, @Param("max") double max, Pageable pageable);
 }
