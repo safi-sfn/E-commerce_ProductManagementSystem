@@ -34,6 +34,7 @@ public interface ProductService {
 		// Returns a Page of ProductDto objects where price is between min and max values
 		Page<ProductDto> searchByTheProductPriceRange(double min, double max, Pageable pageable);
 		
+		// Delete The Product
 		String deleteProduct(int id);
 	}
 
