@@ -31,7 +31,6 @@ public class ProductBrandDto {
 
 	public ProductBrandDto() {
 		super();
-		// TODO Auto-generated constructor stub
 	}	
 	
 	
