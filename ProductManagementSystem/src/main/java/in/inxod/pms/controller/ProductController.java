@@ -173,7 +173,7 @@ public class ProductController {
 	public ResponseEntity<String> deleteProduct(@PathVariable("id") int id) {
 
 		// Step 1: Call the service layer to delete the product
-		// The service will:
+		
 		// - Check if the product exists
 		// - Delete it from the database
 		// - Return a status message
