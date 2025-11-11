@@ -24,7 +24,6 @@ public class ErrorResponse {
 	}
 	public ErrorResponse() {
 		super();
-		
 	}
     
     
